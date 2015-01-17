@@ -48,30 +48,23 @@ var editorViewModel = {
     this.diameter = ko.observable(new Measure(0.50, this.units()[1]));
   },
   addNodeRow: function() {
-    var meters = this.units[1];
-    var nv = new NodeViewModel(0, meters, 0, meters, 0, meters);
+    var meters = this.units()[1];
+    var nv = new NodeViewModel(new Measure(0, meters), new Measure(0, meters), new Measure(0, meters));
     this.nodes.push(nv);
   }
 };
 
-var NodeViewModel = function(x, x_unit, y, y_unit, z, z_unit) {
+var NodeViewModel = function(x, y, z) {
   var self = this;
 
-  // TODO: add display observables to handle unit conversion?
+  if(typeof(x) !== 'object') { throw "Expected x to be an object (Measure), not " + typeof(x); }
+  if(typeof(y) !== 'object') { throw "Expected y to be an object (Measure), not " + typeof(y); }
+  if(typeof(z) !== 'object') { throw "Expected z to be an object (Measure), not " + typeof(z); }
 
-  self.x = ko.observable(x);
-  self.x_unit = ko.observable(x_unit);
-  self.y = ko.observable(y);
-  self.y_unit = ko.observable(y_unit);
-  self.z = ko.observable(z);
-  self.z_unit = ko.observable(z_unit);
+  self.x = x;
+  self.y = y;
+  self.z = z;
 };
-
-/*editorViewModel.prototype.addDemoNodes = function() {
-
-};*/
-
-//editorViewModel.addDemoNodes();
 
 editorViewModel.init();
 

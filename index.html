@@ -38,15 +38,21 @@
             </thead>
             <tbody data-bind="foreach: nodes, as: 'node' ">
               <tr>
-                <td data-bind="text: x"></td>
-                <td data-bind="text: y"></td>
-                <td data-bind="text: z"></td>
+                <td data-bind="template: { name: 'measurement-editor-template', data: x }"></td>
+                <td data-bind="template: { name: 'measurement-editor-template', data: y }"></td>
+                <td data-bind="template: { name: 'measurement-editor-template', data: z }"></td>
               </tr>
             </tbody>
           </table>
           <button type="button" class="btn btn-default" aria-label="Add node" data-bind="click: addNodeRow">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
           </button>
+        </div>
+      </div>
+      <div id="visualize" class="row clearfix">
+        <div class="col-md-12 column">
+          <h2>Visualize</h2>
+          <p>This section can be used to visualize the pipeline created. Update the node settings above to refresh this view.</p>
         </div>
       </div>
     </div>
