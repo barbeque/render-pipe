@@ -9,7 +9,7 @@ var createConstants = function() {
 
   // Create camera and attach to canvas
   var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
-  camera.setTarget(BABYLON.Vector3.Zero());
+  camera.setTarget(new BABYLON.Vector3(0, 3.8, 0));
   camera.attachControl(canvas, false);
 
   var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
@@ -21,6 +21,8 @@ var createConstants = function() {
 /// Creates pipeline geometry which will be changed during execution
 var createPipelineGeometry = function(scene) {
   // TODO: Delete existing pipeline geometry before continuing
+  var pipelineNodePrefix = 'pipenode';
+  var debugLinePrefix = 'debuglines';
 
   var vertices = convertNodesIntoVertices();
 
@@ -35,6 +37,12 @@ var createPipelineGeometry = function(scene) {
 
   return scene;
 };
+
+var findGeometryWithPrefix = function(scene, prefix) {
+  return scene.meshes.filter(function(mesh) {
+    return mesh.name.indexOf(prefix) >= 0;
+  });
+}
 
 var convertNodesIntoVertices = function() {
   var out = [];
