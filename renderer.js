@@ -30,6 +30,9 @@ var createPipelineGeometry = function(scene) {
     sphere.position = vertices[i];
   }
 
+  // Create all the debugging lines in one shot
+  var lines = BABYLON.Mesh.CreateLines('debuglines', vertices, scene);
+
   return scene;
 };
 
