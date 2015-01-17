@@ -55,6 +55,11 @@ var editorViewModel = {
     var meters = this.units()[1];
     var nv = new NodeViewModel(new Measure(0, meters), new Measure(0, meters), new Measure(0, meters));
     this.nodes.push(nv);
+  },
+  deleteNodeRow: function(node) {
+    // TODO: Clean up this reference - something odd with the assignment of 'this' when it returns.
+    // Probably because editorViewModel isn't an instance of a class.
+    editorViewModel.nodes.remove(node);
   }
 };
 

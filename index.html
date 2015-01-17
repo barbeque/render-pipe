@@ -42,13 +42,18 @@
           <h2>Nodes</h2>
           <table class="table table-striped">
             <thead>
-              <tr> <th>X</th> <th>Y</th> <th>Z</th> </tr>
+              <tr> <th>X</th> <th>Y</th> <th>Z</th> <th>Actions</th></tr>
             </thead>
             <tbody data-bind="foreach: nodes, as: 'node' ">
               <tr>
                 <td data-bind="template: { name: 'measurement-editor-template', data: x }"></td>
                 <td data-bind="template: { name: 'measurement-editor-template', data: y }"></td>
                 <td data-bind="template: { name: 'measurement-editor-template', data: z }"></td>
+                <td>
+                  <button type="button" class="btn btn-default" aria-label="Delete node" data-bind="click: $parent.deleteNodeRow">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
