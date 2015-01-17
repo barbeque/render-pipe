@@ -28,7 +28,14 @@ var Measure = function(measurement, unit) {
 
   self.get_measurement_in_meters = function() {
     return self.unit().to_meters(self.measurement());
-  }
+  };
+
+  self.on_changed = function() {
+    console.out('Measure changed.');
+  };
+
+  self.measurement.subscribe(self.on_changed);
+  self.unit.subscribe(self.on_changed);
 };
 
 var editorViewModel = {
@@ -54,6 +61,7 @@ var editorViewModel = {
   addNodeRow: function() {
     var meters = this.units()[1];
     var nv = new NodeViewModel(new Measure(0, meters), new Measure(0, meters), new Measure(0, meters));
+
     this.nodes.push(nv);
   },
   deleteNodeRow: function(node) {
@@ -70,9 +78,16 @@ var NodeViewModel = function(x, y, z) {
   if(typeof(y) !== 'object') { throw "Expected y to be an object (Measure), not " + typeof(y); }
   if(typeof(z) !== 'object') { throw "Expected z to be an object (Measure), not " + typeof(z); }
 
+  self.axisChanged = function() {
+    console.log("A Measure in a Node changed.");
+  };
+
   self.x = ko.observable(x);
+  self.x.subscribe(self.axisChanged);
   self.y = ko.observable(y);
+  self.y.subscribe(self.axisChanged);
   self.z = ko.observable(z);
+  self.z.subscribe(self.axisChanged);
 };
 
 var injectDemoPoints = function() {

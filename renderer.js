@@ -73,12 +73,14 @@ var convertNodesIntoVertices = function() {
 
 var scene = createPipelineGeometry(createConstants());
 
-var subscribe = editorViewModel.nodes.subscribe(function(newNodes) {
+var onNodesChanged = function() {
   // TODO: Chain up the subscriptions so changing individual nodes changes them.
   console.log("node collection has changed!");
 
   scene = createPipelineGeometry(scene);
-});
+};
+
+var subscribe = editorViewModel.nodes.subscribe(onNodesChanged);
 
 engine.runRenderLoop(function() {
   scene.render();
