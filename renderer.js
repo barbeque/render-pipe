@@ -20,20 +20,25 @@ var createConstants = function() {
 
 /// Creates pipeline geometry which will be changed during execution
 var createPipelineGeometry = function(scene) {
-  // TODO: Delete existing pipeline geometry before continuing
+  // Delete existing pipeline geometry before continuing
   var pipelineNodePrefix = 'pipenode';
   var debugLinePrefix = 'debuglines';
+  var pipelineNodes = findGeometryWithPrefix(scene, pipelineNodePrefix);
+  var debugLineGeometry = findGeometryWithPrefix(scene, debugLinePrefix);
+  deleteMeshes(scene, pipelineNodes);
+  deleteMeshes(scene, debugLineGeometry);
 
+  // Generate new geometry.
   var vertices = convertNodesIntoVertices();
 
   // TODO: Could this be more efficient, or at least organized better?
   for(var i = 0; i < vertices.length; ++i) {
-    var sphere = new BABYLON.Mesh.CreateSphere('pipenode' + i, 8, 0.5, scene);
+    var sphere = new BABYLON.Mesh.CreateSphere(pipelineNodePrefix + i, 8, 0.5, scene);
     sphere.position = vertices[i];
   }
 
   // Create all the debugging lines in one shot
-  var lines = BABYLON.Mesh.CreateLines('debuglines', vertices, scene);
+  var lines = BABYLON.Mesh.CreateLines(debugLinePrefix, vertices, scene);
 
   return scene;
 };
@@ -41,8 +46,17 @@ var createPipelineGeometry = function(scene) {
 var findGeometryWithPrefix = function(scene, prefix) {
   return scene.meshes.filter(function(mesh) {
     return mesh.name.indexOf(prefix) >= 0;
-  });
-}
+  }); // TODO: This and the function below could be optimized into a single call
+};
+
+var deleteMeshes = function(scene, geometryList) {
+  for(var i = 0; i < geometryList.length; ++i) {
+    var index = scene.meshes.indexOf(geometryList[i]);
+    if(index >= 0) {
+      scene.meshes.splice(index, 1);
+    }
+  }
+};
 
 var convertNodesIntoVertices = function() {
   var out = [];
@@ -61,7 +75,9 @@ var scene = createPipelineGeometry(createConstants());
 
 var subscribe = editorViewModel.nodes.subscribe(function(newNodes) {
   // TODO: Chain up the subscriptions so changing individual nodes changes them.
-  alert("node collection has changed!");
+  console.log("node collection has changed!");
+
+  scene = createPipelineGeometry(scene);
 });
 
 engine.runRenderLoop(function() {
