@@ -19,30 +19,43 @@
       <div id="specs" class="row clearfix">
         <div class="col-md-12 column">
           <div>
-            <h2>Pipeline Information</h2>
+            <h2>Information</h2>
             <label for="pipeline-name">Pipeline Name</label>
             <input name="pipeline-name" data-bind="value: name"/>
           </div>
           <div>
             <label for="diam">Pipe Diameter</label>
-            <input name="diam" data-bind="value: diameter"/>
-            <select data-bind="options: units, value: diameter_unit, optionsText: 'unit'"></select>
+            <span data-bind="template: { name: 'measurement-editor-template', data: diameter }"></span>
           </div>
         </div>
       </div>
       <div id="editor" class="row clearfix">
         <div class="col-md-12 column">
-          <h2>Pipeline Nodes</h2>
+          <h2>Nodes</h2>
           <table class="table table-striped">
             <thead>
               <tr> <th>X</th> <th>Y</th> <th>Z</th> </tr>
             </thead>
             <tbody data-bind="foreach: nodes, as: 'node' ">
+              <tr>
+                <td data-bind="text: x"></td>
+                <td data-bind="text: y"></td>
+                <td data-bind="text: z"></td>
+              </tr>
             </tbody>
           </table>
+          <button type="button" class="btn btn-default" aria-label="Add node" data-bind="click: addNodeRow">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
     </div>
+
+    <!-- Knockout templates -->
+    <script type="text/html" id="measurement-editor-template">
+      <input data-bind="value: measurement"/>
+      <select data-bind="options: editorViewModel.units, value: unit, optionsText: 'unit'"></select>
+    </script>
 
     <!-- Pre-reqs -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
