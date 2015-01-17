@@ -10,15 +10,46 @@
   </head>
   <body>
     <div class="container">
-      <h1>Process Pipeline Editor</h1>
-      <p>This editor can be used to define and visualize a process pipeline quickly inside your browser.</p>
-      <!-- Pre-reqs -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-      <script src="vendor/ko/knockout-3.2.0.js"></script>
-      <!-- Bootstrap plugins -->
-      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-      <!-- My code -->
-      <script src="editor.js"></script>
+      <div id="header" class="row clearfix">
+        <div class="col-md-12 column">
+          <h1>Process Pipeline Editor</h1>
+          <p class="lead">This editor can be used to define and visualize a process pipeline quickly inside your browser.</p>
+        </div>
+      </div>
+      <div id="specs" class="row clearfix">
+        <div class="col-md-12 column">
+          <div>
+            <h2>Pipeline Information</h2>
+            <span class="label">Pipeline Name</span>
+            <input data-bind="value: name"/>
+          </div>
+          <div>
+            <span class="label">Pipe Diameter</span>
+            <input data-bind="value: diameter"/>
+            <select data-bind="options: units, value: diameter_unit, optionsText: 'unit'"></select>
+          </div>
+        </div>
+      </div>
+      <div id="editor" class="row clearfix">
+        <div class="col-md-12 column">
+          <h2>Pipeline Nodes</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr> <th>X</th> <th>Y</th> <th>Z</th> </tr>
+            </thead>
+            <tbody data-bind="foreach: nodes, as: 'node' ">
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <!-- Pre-reqs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="vendor/ko/knockout-3.2.0.js"></script>
+    <!-- Bootstrap plugins -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- My code -->
+    <script src="editor.js"></script>
   </body>
 </html>
