@@ -20,12 +20,12 @@
         <div class="col-md-12 column">
           <div>
             <h2>Pipeline Information</h2>
-            <span class="label">Pipeline Name</span>
-            <input data-bind="value: name"/>
+            <label for="pipeline-name">Pipeline Name</label>
+            <input name="pipeline-name" data-bind="value: name"/>
           </div>
           <div>
-            <span class="label">Pipe Diameter</span>
-            <input data-bind="value: diameter"/>
+            <label for="diam">Pipe Diameter</label>
+            <input name="diam" data-bind="value: diameter"/>
             <select data-bind="options: units, value: diameter_unit, optionsText: 'unit'"></select>
           </div>
         </div>
