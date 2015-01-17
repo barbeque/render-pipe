@@ -23,8 +23,12 @@ var Measure = function(measurement, unit) {
   }
 
   var self = this;
-  self.measurement = measurement;
-  self.unit = unit;
+  self.measurement = ko.observable(measurement);
+  self.unit = ko.observable(unit);
+
+  self.get_measurement_in_meters = function() {
+    return self.unit().to_meters(self.measurement());
+  }
 };
 
 var editorViewModel = {
@@ -61,9 +65,9 @@ var NodeViewModel = function(x, y, z) {
   if(typeof(y) !== 'object') { throw "Expected y to be an object (Measure), not " + typeof(y); }
   if(typeof(z) !== 'object') { throw "Expected z to be an object (Measure), not " + typeof(z); }
 
-  self.x = x;
-  self.y = y;
-  self.z = z;
+  self.x = ko.observable(x);
+  self.y = ko.observable(y);
+  self.z = ko.observable(z);
 };
 
 var injectDemoPoints = function() {

@@ -22,10 +22,28 @@ var createConstants = function() {
 var createPipelineGeometry = function(scene) {
   // TODO: Delete existing pipeline geometry before continuing
 
-  var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 2, scene);
-  sphere.position.y = 1;
+  var vertices = convertNodesIntoVertices();
+
+  // TODO: Could this be more efficient, or at least organized better?
+  for(var i = 0; i < vertices.length; ++i) {
+    var sphere = new BABYLON.Mesh.CreateSphere('pipenode' + i, 8, 0.5, scene);
+    sphere.position = vertices[i];
+  }
 
   return scene;
+};
+
+var convertNodesIntoVertices = function() {
+  var out = [];
+  for(var i = 0; i < editorViewModel.nodes().length; ++i) {
+    var node = editorViewModel.nodes()[i];
+    var x = node.x().get_measurement_in_meters();
+    var y = node.y().get_measurement_in_meters();
+    var z = node.z().get_measurement_in_meters();
+
+    out.push(new BABYLON.Vector3(x, y, z));
+  }
+  return out;
 };
 
 var scene = createPipelineGeometry(createConstants());
