@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Process Pipeline Editor</title>
 
+    <style>
+      #renderCanvas {
+        width: 512;
+        height: 342;
+        touch-action: none;
+      }
+    </style>
+
     <!-- Bootstrap -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   </head>
@@ -53,6 +61,7 @@
         <div class="col-md-12 column">
           <h2>Visualize</h2>
           <p>This section can be used to visualize the pipeline created. Update the node settings above to refresh this view.</p>
+          <canvas id="renderCanvas"></canvas>
         </div>
       </div>
     </div>
@@ -68,7 +77,10 @@
     <script src="vendor/ko/knockout-3.2.0.js"></script>
     <!-- Bootstrap plugins -->
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Babylon 3D plugins -->
+    <script src="vendor/babylon/babylon.1.14.js"></script>
     <!-- My code -->
     <script src="editor.js"></script>
+    <script src="renderer.js"></script>
   </body>
 </html>
