@@ -31,7 +31,7 @@ var Measure = function(measurement, unit) {
   };
 
   self.on_changed = function() {
-    console.out('Measure changed.');
+    console.log('Measure changed.');
   };
 
   self.measurement.subscribe(self.on_changed);
