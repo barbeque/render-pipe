@@ -36,7 +36,12 @@ var Measure = function(measurement, unit) {
   /// Returns the measurement in meters regardless of the Unit in use.
   /// Primarily used for rendering purposes (the world unit is '1 meter')
   self.getMeasurementInMeters = function() {
-    return self.unit().toMeters(self.measurement());
+    if(self.measurement.isValid()) {
+      return self.unit().toMeters(self.measurement());
+    }
+    else {
+      return 0;
+    }
   };
 
   /// Internal callback for updating the 3D view whenever
