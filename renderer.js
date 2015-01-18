@@ -63,9 +63,6 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene
 
   // Now figure out what the angle should be with a dot product
   if(vectorEqualsCloseEnough(v1, v2.negate())) {
-    console.log("It happened.");
-    console.log("Problem points are " + pointA + ", " + pointB);
-    console.log("Trying to bail out now.");
     cylinder.position = pointA;
     return;
   }
