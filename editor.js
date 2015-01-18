@@ -2,18 +2,18 @@
   Represents a unit of measure.
   @constructor
   @param {string} unit - The suffix of the unit (e.g. 'm')
-  @param {string} conversion_multiplier - What to multiply a measurement in meters by
+  @param {string} conversionMultiplier - What to multiply a measurement in meters by
                                           in order to get this unit.
 */
-var Unit = function(unit, conversion_multiplier) {
+var Unit = function(unit, conversionMultiplier) {
   var self = this;
   self.unit = unit;
-  self.conversion_multiplier = conversion_multiplier;
-  self.to_meters = function(unit_value) {
-    return unit_value / conversion_multiplier;
+  self.conversionMultiplier = conversionMultiplier;
+  self.toMeters = function(unit_value) {
+    return unit_value / conversionMultiplier;
   };
   self.from_meters = function(meters) {
-    return unit_value * conversion_multiplier;
+    return unit_value * conversionMultiplier;
   };
 };
 
@@ -26,8 +26,8 @@ var Measure = function(measurement, unit) {
   self.measurement = ko.observable(measurement);
   self.unit = ko.observable(unit);
 
-  self.get_measurement_in_meters = function() {
-    return self.unit().to_meters(self.measurement());
+  self.getMeasurementInMeters = function() {
+    return self.unit().toMeters(self.measurement());
   };
 
   self.onChangedStub = function() {
@@ -40,11 +40,15 @@ var Measure = function(measurement, unit) {
   self.unit.subscribe(self.onChangedStub);
 };
 
+var RendererSettingsViewModel = function() {
+  var self = this;
+
+  self.isGridEnabled = ko.observable(true);
+};
+
 var editorViewModel = {
   // A "node" is a point connecting two pipe segments within the pipeline.
-  nodes: ko.observableArray(
-
-  ),
+  nodes: ko.observableArray(),
   // Defines the available units and their conversion strategies.
   units: ko.observableArray([
     new Unit('ft', 3.28084),
@@ -70,7 +74,8 @@ var editorViewModel = {
     // TODO: Clean up this reference - something odd with the assignment of 'this' when it returns.
     // Probably because editorViewModel isn't an instance of a class.
     editorViewModel.nodes.remove(node);
-  }
+  },
+  renderingSettings: new RendererSettingsViewModel()
 };
 
 var NodeViewModel = function(x, y, z) {

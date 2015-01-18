@@ -64,10 +64,17 @@
         </div>
       </div>
       <div id="visualize" class="row clearfix">
-        <div class="col-md-12 column">
+        <div class="col-md-8 column">
           <h2>Visualize</h2>
           <p>This section can be used to visualize the pipeline created. Update the node settings above to refresh this view.</p>
           <canvas id="renderCanvas"></canvas>
+        </div>
+        <div class="col-md-4 column">
+          <h3>Settings</h3>
+          <div>
+            <label for="is_grid_enabled">Enable Reference Grid</label>
+            <input type="checkbox" aria-label="Is Grid Enabled" data-bind="checked: renderingSettings.renderingGridEnabled"/>
+          </div>
         </div>
       </div>
     </div>
