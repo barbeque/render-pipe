@@ -62,16 +62,38 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene
   axis.normalize();
 
   // Now figure out what the angle should be with a dot product
-  if(v1.equals(-v2)) {
+  if(vectorEqualsCloseEnough(v1, v2.negate())) {
     console.log("It happened.");
     console.log("Problem points are " + pointA + ", " + pointB);
     console.log("Trying to bail out now.");
+    cylinder.position = pointA;
     return;
   }
   var angle = BABYLON.Vector3.Dot(v1, v2);
 
   // Generate the quaternion
   cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, -Math.PI / 2 + angle);
+};
+
+/// BABYLON Vector3.Equals seems to use exact float comparisons, so here's an idea more tolerant of float oddness
+var vectorEqualsCloseEnough = function(v1, v2, tolerance) {
+  if(typeof(v2) !== 'object') { throw("v2 is supposed to be an object"); }
+  if(typeof(v1) !== 'object') { throw("v1 is supposed to be an object"); }
+
+  if(!tolerance) {
+    tolerance = 0.00002;
+  }
+
+  if(v1.x < v2.x - tolerance || v1.x > v2.x + tolerance ) {
+    return false;
+  }
+  if(v1.y < v2.y - tolerance || v1.y > v2.y + tolerance ) {
+    return false;
+  }
+  if(v1.z < v2.z - tolerance || v1.z > v2.z + tolerance ) {
+    return false;
+  }
+  return true;
 };
 
 /// Creates pipeline geometry which will be changed during execution

@@ -85,14 +85,14 @@ var NodeViewModel = function(x, y, z) {
 var injectDemoPoints = function() {
   // Using coordinates from the demo code
   var feet = editorViewModel.units()[0];
-  /*editorViewModel.nodes.push(new NodeViewModel(new Measure(0, feet), new Measure(0, feet), new Measure(0, feet)));
+  editorViewModel.nodes.push(new NodeViewModel(new Measure(0, feet), new Measure(0, feet), new Measure(0, feet)));
   editorViewModel.nodes.push(new NodeViewModel(new Measure(5, feet), new Measure(0, feet), new Measure(0, feet)));
   editorViewModel.nodes.push(new NodeViewModel(new Measure(5, feet), new Measure(20, feet), new Measure(0, feet)));
-  editorViewModel.nodes.push(new NodeViewModel(new Measure(5, feet), new Measure(20, feet), new Measure(-2, feet)));*/
+  editorViewModel.nodes.push(new NodeViewModel(new Measure(5, feet), new Measure(20, feet), new Measure(-2, feet)));
   editorViewModel.nodes.push(new NodeViewModel(new Measure(10, feet), new Measure(20, feet), new Measure(-2, feet)));
   editorViewModel.nodes.push(new NodeViewModel(new Measure(10, feet), new Measure(2, feet), new Measure(-2, feet)));
-  /*editorViewModel.nodes.push(new NodeViewModel(new Measure(18, feet), new Measure(2, feet), new Measure(-2, feet)));
-  editorViewModel.nodes.push(new NodeViewModel(new Measure(18, feet), new Measure(2, feet), new Measure(4, feet)));*/
+  editorViewModel.nodes.push(new NodeViewModel(new Measure(18, feet), new Measure(2, feet), new Measure(-2, feet)));
+  editorViewModel.nodes.push(new NodeViewModel(new Measure(18, feet), new Measure(2, feet), new Measure(4, feet)));
 };
 
 editorViewModel.init();
