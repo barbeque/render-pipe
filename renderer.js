@@ -33,7 +33,7 @@ var createPipelineGeometry = function(scene) {
 
   // TODO: Could this be more efficient, or at least organized better?
   for(var i = 0; i < vertices.length; ++i) {
-    var sphere = new BABYLON.Mesh.CreateSphere(pipelineNodePrefix + i, 8, 0.5, scene);
+    var sphere = new BABYLON.Mesh.CreateSphere(pipelineNodePrefix + i, 8, 0.25, scene);
     sphere.position = vertices[i];
   }
 
