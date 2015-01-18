@@ -44,7 +44,6 @@ var createReferenceGrid = function(scene, material) {
 };
 
 var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene) {
-  // TODO: Diameter!!
   var distance = BABYLON.Vector3.Distance(pointA, pointB);
   var cylinder = BABYLON.Mesh.CreateCylinder(name, distance, diameter, diameter, 36, scene, true);
 
