@@ -15,7 +15,7 @@ var Unit = function(unit, conversionMultiplier) {
     return unit_value / conversionMultiplier;
   };
   /// Convert a value represented in meters into this Unit.
-  self.from_meters = function(meters) {
+  self.fromMeters = function(meters) {
     return unit_value * conversionMultiplier;
   };
 };
