@@ -45,10 +45,11 @@ var createReferenceGrid = function(scene, material) {
 
 var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene) {
   var distance = BABYLON.Vector3.Distance(pointA, pointB);
-  var cylinder = BABYLON.Mesh.CreateCylinder(name, distance, diameter, diameter, 36, scene, true);
+  var cylinder = BABYLON.Mesh.CreateCylinder(name, distance, diameter, diameter, 20, scene, true);
 
   // Pivot from the end of the cylinder, not the centre
   cylinder.setPivotMatrix(BABYLON.Matrix.Translation(0, -distance / 2, 0));
+
   // Move the cylinder to start at pointB
   cylinder.position = pointB;
 
@@ -59,11 +60,12 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene
   var v2 = new BABYLON.Vector3(0, 1, 0);
   var axis = BABYLON.Vector3.Cross(v1, v2);
   axis.normalize();
+
   // Now figure out what the angle should be with a dot product
   var angle = BABYLON.Vector3.Dot(v1, v2);
 
   // Generate the quaternion
-  cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, (-Math.PI / 2) + angle);
+  cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, -Math.PI / 2 + angle);
 };
 
 /// Creates pipeline geometry which will be changed during execution
