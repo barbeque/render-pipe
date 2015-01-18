@@ -31,9 +31,7 @@ var Measure = function(measurement, unit) {
   };
 
   self.onChangedStub = function() {
-    if(onNodesChanged) {
-      onNodesChanged();
-    }
+    if(onNodesChanged) { onNodesChanged(); }
   };
 
   self.measurement.subscribe(self.onChangedStub);
