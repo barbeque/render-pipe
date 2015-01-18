@@ -62,6 +62,12 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene
   axis.normalize();
 
   // Now figure out what the angle should be with a dot product
+  if(v1.equals(-v2)) {
+    console.log("It happened.");
+    console.log("Problem points are " + pointA + ", " + pointB);
+    console.log("Trying to bail out now.");
+    return;
+  }
   var angle = BABYLON.Vector3.Dot(v1, v2);
 
   // Generate the quaternion
