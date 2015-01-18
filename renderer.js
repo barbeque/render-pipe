@@ -109,7 +109,7 @@ var onNodesChanged = function() {
 
 var subscribe = editorViewModel.nodes.subscribe(onNodesChanged);
 
-editorViewModel.renderingSettings.isGridEnabled.subscribe(setGridEnabled);
+editorViewModel.renderingGridEnabled.subscribe(setGridEnabled);
 
 engine.runRenderLoop(function() {
   scene.render();

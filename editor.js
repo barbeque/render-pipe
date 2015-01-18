@@ -73,7 +73,8 @@ var editorViewModel = {
     // Probably because editorViewModel isn't an instance of a class.
     editorViewModel.nodes.remove(node);
   },
-  renderingSettings: new RendererSettingsViewModel()
+  renderingGridEnabled: ko.observable(true)
+  //renderingSettings: new RendererSettingsViewModel()
 };
 
 var NodeViewModel = function(x, y, z) {
