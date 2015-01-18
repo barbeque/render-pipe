@@ -34,9 +34,11 @@ var createReferenceGrid = function(scene, material) {
     BABYLON.Tags.EnableFor(zLine);
     zLine.addTags('reference-grid');
     zLine.material = material;
+    zLine.isVisible = false;
     var xLine = BABYLON.Mesh.CreateLines('xzGrid_x_' + x, [ new BABYLON.Vector3(start, 0, x), new BABYLON.Vector3(end, 0, x) ], scene);
     BABYLON.Tags.EnableFor(xLine);
     xLine.material = material;
+    xLine.isVisible = false;
     xLine.addTags('reference-grid');
   }
 }
