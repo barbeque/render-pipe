@@ -106,7 +106,7 @@ var createPipelineGeometry = function(scene) {
   var pipelineNodePrefix = 'pipenode';
   var tubingPrefix = 'piping';
   var pipelineNodes = findGeometryWithPrefix(scene, pipelineNodePrefix); // TODO: Refactor to use tags.
-  var debugLineGeometry = findGeometryWithPrefix(scene, debugLinePrefix);
+  var debugLineGeometry = findGeometryWithPrefix(scene, tubingPrefix);
   deleteMeshes(scene, pipelineNodes);
   deleteMeshes(scene, debugLineGeometry);
 

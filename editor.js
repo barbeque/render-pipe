@@ -30,7 +30,7 @@ var Measure = function(measurement, unit) {
   }
 
   var self = this;
-  self.measurement = ko.observable(measurement);
+  self.measurement = ko.observable(measurement).extend({ required: true }).extend({ number: true });
   self.unit = ko.observable(unit);
 
   /// Returns the measurement in meters regardless of the Unit in use.
