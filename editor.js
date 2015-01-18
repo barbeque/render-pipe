@@ -9,14 +9,21 @@ var Unit = function(unit, conversionMultiplier) {
   var self = this;
   self.unit = unit;
   self.conversionMultiplier = conversionMultiplier;
+
+  /// Convert a value represented by this Unit into meters.
   self.toMeters = function(unit_value) {
     return unit_value / conversionMultiplier;
   };
+  /// Convert a value represented in meters into this Unit.
   self.from_meters = function(meters) {
     return unit_value * conversionMultiplier;
   };
 };
 
+/**
+  A Measure is a number attached to a unit, e.g. "36 meters."
+  It contains all relevant logic for display of the measurement.
+*/
 var Measure = function(measurement, unit) {
   if(typeof(unit) !== 'object') {
     throw "Expected unit argument to be an object, got " + typeof(unit);
@@ -26,10 +33,14 @@ var Measure = function(measurement, unit) {
   self.measurement = ko.observable(measurement);
   self.unit = ko.observable(unit);
 
+  /// Returns the measurement in meters regardless of the Unit in use.
+  /// Primarily used for rendering purposes (the world unit is '1 meter')
   self.getMeasurementInMeters = function() {
     return self.unit().toMeters(self.measurement());
   };
 
+  /// Internal callback for updating the 3D view whenever
+  /// some component of this measure has changed.
   self.onChangedStub = function() {
     if(onNodesChanged) { onNodesChanged(); }
   };
@@ -38,6 +49,9 @@ var Measure = function(measurement, unit) {
   self.unit.subscribe(self.onChangedStub);
 };
 
+/**
+  A Knockout view model containing major logic and data required for the editor.
+*/
 var editorViewModel = {
   // A "node" is a point connecting two pipe segments within the pipeline.
   nodes: ko.observableArray(),
@@ -70,6 +84,9 @@ var editorViewModel = {
   renderingGridEnabled: ko.observable(false)
 };
 
+/**
+  A knockout view model of the three dimensions of a piping node (or elbow).
+*/
 var NodeViewModel = function(x, y, z) {
   var self = this;
 
@@ -82,6 +99,10 @@ var NodeViewModel = function(x, y, z) {
   self.z = ko.observable(z);
 };
 
+/**
+  Fills the node collection with some demo nodes to create a good-looking
+  process pipe off the bat.
+*/
 var injectDemoPoints = function() {
   // Using coordinates from the demo code
   var feet = editorViewModel.units()[0];
