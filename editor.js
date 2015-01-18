@@ -38,12 +38,6 @@ var Measure = function(measurement, unit) {
   self.unit.subscribe(self.onChangedStub);
 };
 
-var RendererSettingsViewModel = function() {
-  var self = this;
-
-  self.isGridEnabled = ko.observable(true);
-};
-
 var editorViewModel = {
   // A "node" is a point connecting two pipe segments within the pipeline.
   nodes: ko.observableArray(),
@@ -73,8 +67,7 @@ var editorViewModel = {
     // Probably because editorViewModel isn't an instance of a class.
     editorViewModel.nodes.remove(node);
   },
-  renderingGridEnabled: ko.observable(true)
-  //renderingSettings: new RendererSettingsViewModel()
+  renderingGridEnabled: ko.observable(false)
 };
 
 var NodeViewModel = function(x, y, z) {
