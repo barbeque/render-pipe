@@ -43,14 +43,15 @@ var createReferenceGrid = function(scene, material) {
   }
 };
 
-var createCylinderBetweenPoints = function(pointA, pointB, name, scene) {
+var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene) {
+  // TODO: Diameter!!
   var distance = BABYLON.Vector3.Distance(pointA, pointB);
-  var cylinder = BABYLON.Mesh.CreateCylinder(name, distance, 1, 1, 36, scene, true);
+  var cylinder = BABYLON.Mesh.CreateCylinder(name, distance, diameter, diameter, 36, scene, true);
 
   // Pivot from the end of the cylinder, not the centre
   cylinder.setPivotMatrix(BABYLON.Matrix.Translation(0, -distance / 2, 0));
-  // Move the cylinder to start at pointA
-  cylinder.position = pointA;
+  // Move the cylinder to start at pointB
+  cylinder.position = pointB;
 
   // Find direction vector between points (v1) and cross it with a y-up vector (v2)
   // to find the pivot axis for our quaternion
@@ -63,7 +64,7 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, scene) {
   var angle = BABYLON.Vector3.Dot(v1, v2);
 
   // Generate the quaternion
-  cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, -Math.PI / 2 + angle);
+  cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, (-Math.PI / 2) + angle);
 };
 
 /// Creates pipeline geometry which will be changed during execution
@@ -78,20 +79,21 @@ var createPipelineGeometry = function(scene) {
 
   // Generate new geometry.
   var vertices = convertNodesIntoVertices();
+  var diameter = computeDiameter();
 
   // TODO: Could this be more efficient, or at least organized better?
   for(var i = 0; i < vertices.length; ++i) {
-    var sphere = new BABYLON.Mesh.CreateSphere(pipelineNodePrefix + i, 8, 0.25, scene);
+    var sphere = new BABYLON.Mesh.CreateSphere(pipelineNodePrefix + i, 8, diameter, scene);
     sphere.position = vertices[i];
 
     if(i + 1 < vertices.length) {
       // TODO: Correct name later
-      var spanningCylinder = createCylinderBetweenPoints(vertices[i], vertices[i + 1], 'debuglines' + i, scene);
+      var spanningCylinder = createCylinderBetweenPoints(vertices[i], vertices[i + 1], 'debuglines' + i, diameter, scene);
     }
   }
 
-  /*// Create all the debugging lines in one shot
-  var lines = BABYLON.Mesh.CreateLines(debugLinePrefix, vertices, scene);*/
+  // Create all the debugging lines in one shot
+  var lines = BABYLON.Mesh.CreateLines(debugLinePrefix, vertices, scene);
 
   return scene;
 };
@@ -122,6 +124,10 @@ var convertNodesIntoVertices = function() {
     out.push(new BABYLON.Vector3(x, y, z));
   }
   return out;
+};
+
+var computeDiameter = function() {
+  return editorViewModel.diameter().getMeasurementInMeters();
 };
 
 var scene = createPipelineGeometry(createConstants());
