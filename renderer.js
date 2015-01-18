@@ -41,7 +41,30 @@ var createReferenceGrid = function(scene, material) {
     xLine.isVisible = false;
     xLine.addTags('reference-grid');
   }
-}
+};
+
+var createCylinderBetweenPoints = function(pointA, pointB, name, scene) {
+  var distance = BABYLON.Vector3.Distance(pointA, pointB);
+  var cylinder = BABYLON.Mesh.CreateCylinder(name, distance, 1, 1, 36, scene, true);
+
+  // Pivot from the end of the cylinder, not the centre
+  cylinder.setPivotMatrix(BABYLON.Matrix.Translation(0, -distance / 2, 0));
+  // Move the cylinder to start at pointA
+  cylinder.position = pointA;
+
+  // Find direction vector between points (v1) and cross it with a y-up vector (v2)
+  // to find the pivot axis for our quaternion
+  var v1 = pointB.subtract(pointA);
+  v1.normalize();
+  var v2 = new BABYLON.Vector3(0, 1, 0);
+  var axis = BABYLON.Vector3.Cross(v1, v2);
+  axis.normalize();
+  // Now figure out what the angle should be with a dot product
+  var angle = BABYLON.Vector3.Dot(v1, v2);
+
+  // Generate the quaternion
+  cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, -Math.PI / 2 + angle);
+};
 
 /// Creates pipeline geometry which will be changed during execution
 var createPipelineGeometry = function(scene) {
@@ -60,10 +83,15 @@ var createPipelineGeometry = function(scene) {
   for(var i = 0; i < vertices.length; ++i) {
     var sphere = new BABYLON.Mesh.CreateSphere(pipelineNodePrefix + i, 8, 0.25, scene);
     sphere.position = vertices[i];
+
+    if(i + 1 < vertices.length) {
+      // TODO: Correct name later
+      var spanningCylinder = createCylinderBetweenPoints(vertices[i], vertices[i + 1], 'debuglines' + i, scene);
+    }
   }
 
-  // Create all the debugging lines in one shot
-  var lines = BABYLON.Mesh.CreateLines(debugLinePrefix, vertices, scene);
+  /*// Create all the debugging lines in one shot
+  var lines = BABYLON.Mesh.CreateLines(debugLinePrefix, vertices, scene);*/
 
   return scene;
 };
