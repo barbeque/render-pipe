@@ -8,8 +8,10 @@ var createConstants = function() {
   scene.clearColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 
   // Create camera and attach to canvas
-  var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
-  camera.setTarget(new BABYLON.Vector3(0, 3.8, 0));
+  /*var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), scene);
+  camera.setTarget(new BABYLON.Vector3(0, 3.8, 0));*/
+
+  var camera = new BABYLON.ArcRotateCamera('arc', 1, 0.8, 10, new BABYLON.Vector3(0, 3.8, 0), scene);
   camera.attachControl(canvas, false);
 
   var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
