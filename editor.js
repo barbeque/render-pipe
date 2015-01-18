@@ -30,12 +30,14 @@ var Measure = function(measurement, unit) {
     return self.unit().to_meters(self.measurement());
   };
 
-  self.on_changed = function() {
-    console.log('Measure changed.');
+  self.onChangedStub = function() {
+    if(onNodesChanged) {
+      onNodesChanged();
+    }
   };
 
-  self.measurement.subscribe(self.on_changed);
-  self.unit.subscribe(self.on_changed);
+  self.measurement.subscribe(self.onChangedStub);
+  self.unit.subscribe(self.onChangedStub);
 };
 
 var editorViewModel = {
@@ -78,16 +80,9 @@ var NodeViewModel = function(x, y, z) {
   if(typeof(y) !== 'object') { throw "Expected y to be an object (Measure), not " + typeof(y); }
   if(typeof(z) !== 'object') { throw "Expected z to be an object (Measure), not " + typeof(z); }
 
-  self.axisChanged = function() {
-    console.log("A Measure in a Node changed.");
-  };
-
   self.x = ko.observable(x);
-  self.x.subscribe(self.axisChanged);
   self.y = ko.observable(y);
-  self.y.subscribe(self.axisChanged);
   self.z = ko.observable(z);
-  self.z.subscribe(self.axisChanged);
 };
 
 var injectDemoPoints = function() {
