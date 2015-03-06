@@ -63,7 +63,7 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene
   var axis = BABYLON.Vector3.Cross(v1, v2);
   axis.normalize();
 
-  if(vectorEqualsCloseEnough(v1, v2.negate())) {
+  if(v1.equalsWithEpsilon(v2.negate())) {
     // In the case v1 == -v2 (or closely enough for a GPU)
     // this can produce a zero rotation relative to A,
     // which ends up being exactly in the opposite direction we want.
@@ -77,27 +77,6 @@ var createCylinderBetweenPoints = function(pointA, pointB, name, diameter, scene
 
   // Generate the quaternion
   cylinder.rotationQuaternion = BABYLON.Quaternion.RotationAxis(axis, -Math.PI / 2 + angle);
-};
-
-/// BABYLON Vector3.Equals seems to use exact float comparisons, so here's an idea more tolerant of float oddness
-var vectorEqualsCloseEnough = function(v1, v2, tolerance) {
-  if(typeof(v2) !== 'object') { throw("v2 is supposed to be an object"); }
-  if(typeof(v1) !== 'object') { throw("v1 is supposed to be an object"); }
-
-  if(!tolerance) {
-    tolerance = 0.00002;
-  }
-
-  if(v1.x < v2.x - tolerance || v1.x > v2.x + tolerance ) {
-    return false;
-  }
-  if(v1.y < v2.y - tolerance || v1.y > v2.y + tolerance ) {
-    return false;
-  }
-  if(v1.z < v2.z - tolerance || v1.z > v2.z + tolerance ) {
-    return false;
-  }
-  return true;
 };
 
 /// Creates pipeline geometry which will be changed during execution
